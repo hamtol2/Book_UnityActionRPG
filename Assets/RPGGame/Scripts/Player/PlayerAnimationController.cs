@@ -23,6 +23,12 @@ namespace RPGGame
         // 애니메이터 컨트롤러의 State 파라미터에 값을 설정하는 함수
         public void OnStateChanged(PlayerStateManager.State newState)
         {
+            // Animator 컴포넌트 참조 변수가 설정되어 있지 않으면 함수 종료
+            if (refAnimator == null)
+            {
+                return;
+            }
+
             // State 파라미터에 값을 설정
             refAnimator.SetInteger("State", (int)newState);
         }
