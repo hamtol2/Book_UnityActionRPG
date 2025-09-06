@@ -25,6 +25,11 @@ namespace RPGGame
         // 자식 클래스에서 확장이 가능하도록 virtual로 선언
         public virtual void Use()
         {
+            // 인벤토리 관리자에 이 아이템이 사용됐다는 메시지를 전달
+            InventoryManager.Instance.OnItemUsed(this);
+
+            // 다이얼로그에 아이템 사용 메시지 전달
+            Dialogue.ShowDialogueTextTemporarily(messageWhenUsed);
         }
     }
 }

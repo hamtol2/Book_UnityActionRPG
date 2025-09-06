@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace RPGGame
@@ -60,7 +61,14 @@ namespace RPGGame
             IsJump = jumpAction.WasPressedThisFrame();
 
             // 공격 입력 값 읽기
-            IsAttack = attackAction.WasPressedThisFrame();
+            //IsAttack = attackAction.WasPressedThisFrame();
+
+            // 마우스 포인터가 UI 위에 없을 때만 마우스 클릭 이벤트 발행
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                // 공격 입력 값을 읽는다.
+                IsAttack = attackAction.WasPressedThisFrame();
+            }
         }
     }
 }

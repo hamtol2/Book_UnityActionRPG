@@ -61,11 +61,19 @@ namespace RPGGame
             }
 
             // 인벤토리 관리자에 아이템 추가
+            InventoryManager.Instance.OnItemCollected(this);
+
+            // 아이템 수집 후 제거해야 할 때 게임 오브젝트 삭제
+            if (shouldDeleteAfterCollected)
+            {
+                Destroy(gameObject);
+            }
 
             // 아이템이 수집됐다는 이벤트 발행
             OnItemCollected?.Invoke();
 
             // 다이얼로그에 아이템 수집 메시지 전달
+            Dialogue.ShowDialogueTextTemporarily(item.messageWhenCollected);
         }
     }
 }
