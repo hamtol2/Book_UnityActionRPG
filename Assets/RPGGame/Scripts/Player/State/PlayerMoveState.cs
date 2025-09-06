@@ -8,7 +8,7 @@ namespace RPGGame
     public class PlayerMoveState : PlayerStateBase
     {
         // 회전 속력 (단위: 도/초).
-        [SerializeField] private float rotationSpeed = 540f;
+        //[SerializeField] private float rotationSpeed = 540f;
 
         protected override void Update()
         {
@@ -31,7 +31,7 @@ namespace RPGGame
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
 
                 // 현재 회전에서 목표 회전으로 부드럽게 회전 적용.
-                refTransform.rotation = Quaternion.RotateTowards(refTransform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                refTransform.rotation = Quaternion.RotateTowards(refTransform.rotation, targetRotation, data.rotationSpeed * Time.deltaTime);
             }
         }
 

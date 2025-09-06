@@ -21,6 +21,10 @@ namespace RPGGame
         // PlayerAnimationController 참조 변수
         protected PlayerAnimationController animationController;
 
+        // 플레이어가 사용할 데이터 변수.
+        // 이 변수는 플레이어 스테이트 관리자가 전달해서 설정.
+        protected PlayerData data;
+
         // 스테이트의 진입 함수
         // 스크립트가 비활성화 상태에서 다시 활성화되면 그 때마다 한 번씩 실행된다.
         protected virtual void OnEnable()
@@ -80,6 +84,13 @@ namespace RPGGame
             // Root Motion을 통해 애니메이션이 이동한 거리는 Animator.deltaPosition으로 얻을 수 있다.
             // 이 deltaPosition 값을 characterController.Move 함수에 전달해 이동 기능을 구현.
             characterController.Move(refAnimator.deltaPosition);
+        }
+
+        // 플레이어 데이터를 설정할 때 사용할 함수.
+        // 플레이어 스테이트 관리자가 각 스테이트를 초기화할 때 이 함수를 사용해서 플레이어 데이터를 전달해줌.
+        public void SetData(PlayerData data)
+        {
+            this.data = data;
         }
     }
 }

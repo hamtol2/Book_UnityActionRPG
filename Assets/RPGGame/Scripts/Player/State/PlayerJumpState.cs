@@ -7,13 +7,13 @@ namespace RPGGame
     public class PlayerJumpState : PlayerStateBase
     {
         // 점프를 할 때 위로 향하는 속도(미터/초)
-        [SerializeField] private float jumpPower = 8f;
+        //[SerializeField] private float jumpPower = 8f;
 
         // 점프 상태일 때 플레이어의 Y축 속력
         [SerializeField] private float verticalSpeed = 0f;
 
         // 점프할 때 적용할 중력
-        [SerializeField] private float gravityInJump = 10f;
+        //[SerializeField] private float gravityInJump = 10f;
 
         // 플레이어가 공중에 떠 있을 때 앞으로 이동하는 속력
         [SerializeField] private float moveSpeed = 5f;
@@ -26,7 +26,7 @@ namespace RPGGame
             base.OnEnable();
 
             // 점프가 시작되면 플레이어가 위로 올라갈 수 있도록 힘 적용.
-            verticalSpeed = jumpPower;
+            verticalSpeed = data.jumpPower;
         }
 
         protected override void Update()
@@ -49,7 +49,7 @@ namespace RPGGame
                 if (verticalSpeed > 0f)
                 {
                     // 이때는 위로 적용되는 힘을 줄여야 함(그래야 다시 떨어질 수 있기 때문에)
-                    verticalSpeed -= gravityInJump * Time.deltaTime;
+                    verticalSpeed -= data.gravityInJump * Time.deltaTime;
                 }
 
                 // 점프 높이의 정점에 도달했는지 확인

@@ -40,6 +40,9 @@ namespace RPGGame
         // 플레이어 스테이트가 변경될 때 발행될 이벤트
         [SerializeField] private UnityEvent<State> OnStateChanged;
 
+        // 플레이어 데이터 참조 변수 (ScriptableObject를 연결).
+        [SerializeField] private PlayerData data;
+
         // 캐릭터가 지면에 있는지 확인하기 위해 캐릭터 컨트롤러를 사용
         private CharacterController characterController;
 
@@ -57,6 +60,11 @@ namespace RPGGame
 
         private void Awake()
         {
+            // 플레이어 데이터 로드.
+            // Resources 폴더에 있는 애셋은 Resourcess.Load를 통해서 동적으로 로드가 가능.
+            //data = Resources.Load("Data/Player Data") as PlayerData;
+            data = DataManager.Instance.playerData;
+
             // 캐릭터 컨트롤러 설정
             if (characterController == null)
             {
@@ -80,6 +88,17 @@ namespace RPGGame
             if (weaponController == null)
             {
                 weaponController = GetComponentInChildren<WeaponController>();
+            }
+
+            // 플레이어 스테이트 컴포넌트 초기화 (데이터 설정).
+            for (int ix = 0; ix < states.Length; ++ix)
+            {
+                // 스테이트에 데이터 전달 (의존성 주입).
+                // data 변수의 경우는 동적으로 검색해서 설정하기 때문에 null 체크를 해주는 것이 좋음.
+                if (data != null)
+                {
+                    states[ix].SetData(data);
+                }
             }
         }
 

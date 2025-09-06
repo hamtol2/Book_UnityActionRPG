@@ -1268,6 +1268,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  data: {fileID: 0}
 --- !u!114 &1480286329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1280,7 +1281,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 233d539d008ee4e409e4406742eb5cb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 540
 --- !u!114 &1480286330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1305,9 +1305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c67753f0ea81d04586c65853bec5f8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpPower: 8
   verticalSpeed: 0
-  gravityInJump: 10
   moveSpeed: 3
   OnJumpEnd:
     m_PersistentCalls:
@@ -1545,6 +1543,50 @@ MonoBehaviour:
   attackTargetLayer:
     serializedVersion: 2
     m_Bits: 0
+--- !u!1 &1615377523
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1615377524}
+  - component: {fileID: 1615377525}
+  m_Layer: 0
+  m_Name: DataManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1615377524
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615377523}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1615377525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615377523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a16c1f2822211a428e956a93328e314, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1669209753
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2063,3 +2105,4 @@ SceneRoots:
   - {fileID: 65785178}
   - {fileID: 1609298054}
   - {fileID: 584822515}
+  - {fileID: 1615377524}
