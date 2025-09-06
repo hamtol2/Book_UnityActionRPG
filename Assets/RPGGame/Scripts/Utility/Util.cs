@@ -42,6 +42,29 @@ namespace RPGGame
             return Vector3.Distance(selfTransform.position, destination) < offset;
         }
 
+        // 시야 판정에 사용하는 함수(시야각과 시야 거리를 모두 검사)
+        public static bool IsInSight(Transform selfTransform, Transform target, float sightAngle, float sightRange)
+        {
+            // 시야각 계산을 위해 플레이어로 향하는 방향 구하기
+            Vector3 direction = target.position - selfTransform.position;
+            direction.Normalize();
+
+            // 트랜스폼의 앞방향(forward) 벡터와 몬스터에서 플레이어로 향하는 벡터 사이의 각도를 계산
+            // 이 값이 시야각 내에 포함되는지 확인
+            if (Vector3.Angle(selfTransform.forward, direction) <= sightAngle)
+            {
+                // 시야각 안에 들어왔으면 시야 거리 안에도 들어왔는지 한번 더 확인
+                if (Vector3.Distance(selfTransform.position, target.position) <= sightRange)
+                {
+                    // 이 경우에는 시야에 들어왔다고 판단
+                    return true;
+                }
+            }
+
+            // 위에서 확인한 경우가 아니라면, 시야 범위 밖에 있다고 판단
+            return false;
+        }
+
         // center를 기준으로 range의 범위에서 이동 가능한 위치를 랜덤으로 구한 뒤 반환하는 함수
         // 랜덤 위치 선택을 30회 시도해보고 그 횟수 안에서 이동 가능한 위치를 찾으면 해당 위치를 반환
         // 30회를 모두 시도했는데 이동 가능한 위치를 찾지 못했으면 실패

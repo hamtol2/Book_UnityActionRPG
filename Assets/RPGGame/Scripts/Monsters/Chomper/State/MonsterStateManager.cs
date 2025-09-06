@@ -13,6 +13,8 @@ namespace RPGGame
             None = -1,
             Idle,
             Patrol,
+            Chase,
+            Attack,
             Length
         }
 
@@ -91,6 +93,32 @@ namespace RPGGame
         {
             // Idle 스테이트로 시작
             SetState(State.Idle);
+        }
+
+        private void Update()
+        {
+            // 현재 스테이트가 Idle/Patrol이면, 플레이어가 시야에 들어왔는지 확인(정찰)
+            if (state == State.Idle || state == State.Patrol)
+            {
+                // 시야에 들어왔는지 확인 후 시야에 들어왔으면 Chase 스테이트로 전환
+                if (Util.IsInSight(refTransform, PlayerTransform, data.sightAngle, data.sightRange))
+                {
+                    // Chase 스테이트로 전환
+                    SetState(State.Chase);
+                    return;
+                }
+            }
+
+            // 현재 스테이트가 Chase/Attack 스테이트라면, 플레이어가 시야에서 벗어났는지 확인
+            if (state == State.Chase || state == State.Attack)
+            {
+                // 시야에서 벗어났는지 확인하고, 벗어났으면 Idle 스테이트로 전환
+                if (!Util.IsInSight(refTransform, PlayerTransform, data.sightAngle, data.sightRange))
+                {
+                    SetState(State.Idle);
+                    return;
+                }
+            }
         }
 
         // 스테이트를 전환할 때 사용하는 함수
