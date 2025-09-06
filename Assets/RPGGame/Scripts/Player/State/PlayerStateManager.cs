@@ -49,6 +49,9 @@ namespace RPGGame
         // 플레이어 애니메이션 컨트롤러 참조 변수
         private PlayerAnimationController animationController;
 
+        // 무기 컨트롤러 참조 변수.
+        private WeaponController weaponController;
+
         // 다음에 이어질 공격 콤보 값을 보여주는 공개 프로퍼티
         public AttackCombo NextAttackCombo { get; private set; } = AttackCombo.None;
 
@@ -72,6 +75,12 @@ namespace RPGGame
             {
                 attackState.SubscribeOnAttackEnd(OnAttackEnd);
             }
+
+            // 무기 컨트롤러 참조 변수 설정.
+            if (weaponController == null)
+            {
+                weaponController = GetComponentInChildren<WeaponController>();
+            }
         }
 
         private void OnEnable()
@@ -89,7 +98,8 @@ namespace RPGGame
             }
 
             // 공격 입력 확인
-            if (InputManager.IsAttack)
+            // 무기를 획득한 상태인지도 함께 확인
+            if (InputManager.IsAttack && weaponController.IsWeaponAttached)
             {
                 // 현재 스테이트가 공격이 아니라면, 공격 스테이트로 전환
                 if (state != State.Attack)

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28cb34e9a8d8dde47ae34d6c25ae718e, type: 3}
+  m_Name: Weapon
+  m_EditorClassIdentifier: 
+  itemName: "\uBB34\uAE30"
+  sprite: {fileID: -880480863, guid: e612f4f7c13bd23459b8cc448c252bf1, type: 3}
+  messageWhenCollected: "\uBB34\uAE30 \uC544\uC774\uD15C\uC744 \uD68D\uB4DD\uD588\uC2B5\uB2C8\uB2E4.\n\uBB34\uAE30\uC758
+    \uACF5\uACA9\uB825\uC740 15\uC785\uB2C8\uB2E4."
+  messageWhenUsed: "\uBB34\uAE30 \uC544\uC774\uD15C\uC744 \uC0AC\uC6A9\uD588\uC2B5\uB2C8\uB2E4.\n\uBB34\uAE30\uC758
+    \uACF5\uACA9\uB825\uC740 15\uC785\uB2C8\uB2E4."
+  attack: 15
