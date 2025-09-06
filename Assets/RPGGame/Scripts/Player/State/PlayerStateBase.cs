@@ -15,6 +15,12 @@ namespace RPGGame
         // Animator 컴포넌트 참조 변수
         protected Animator refAnimator;
 
+        // PlayerStateManager 참조 변수
+        protected PlayerStateManager manager;
+
+        // PlayerAnimationController 참조 변수
+        protected PlayerAnimationController animationController;
+
         // 스테이트의 진입 함수
         // 스크립트가 비활성화 상태에서 다시 활성화되면 그 때마다 한 번씩 실행된다.
         protected virtual void OnEnable()
@@ -35,6 +41,18 @@ namespace RPGGame
             if (refAnimator == null)
             {
                 refAnimator = GetComponent<Animator>();
+            }
+
+            // PlayerStateManager 참조 변수 설정
+            if (manager == null)
+            {
+                manager = GetComponent<PlayerStateManager>();
+            }
+
+            // PlayerAnimationController 참조 변수 설정
+            if (animationController == null)
+            {
+                animationController = GetComponentInChildren<PlayerAnimationController>();
             }
         }
 

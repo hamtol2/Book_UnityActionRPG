@@ -23,8 +23,35 @@ namespace RPGGame
         // 애니메이터 컨트롤러의 State 파라미터에 값을 설정하는 함수
         public void OnStateChanged(PlayerStateManager.State newState)
         {
+            // Animator 컴포넌트가 설정되어 있지 않으면 함수 종료
+            if (refAnimator == null)
+            {
+                return;
+            }
+
             // State 파라미터에 값을 설정
             refAnimator.SetInteger("State", (int)newState);
+        }
+
+        // 플레이어가 점프했다가 착지할 때 설정하는 함수
+        public void OnLanding()
+        {
+            // Landing 트리거 파라미터 설정
+            refAnimator.SetTrigger("Landing");
+        }
+
+        // 공격 콤보 값을 변경할 때 사용하는 함수
+        public void SetAttackComboState(int attackCombo)
+        {
+            // AttackCombo 정수 파라미터에 값 설정
+            refAnimator.SetInteger("AttackCombo", attackCombo);
+        }
+
+        // 현재 재생 중인 애니메이션 스테이트를 반환하는 함수
+        public AnimatorStateInfo GetCurrentStateInfo()
+        {
+            // 애니메이터에서 재생하는 스테이트 정보를 반환
+            return refAnimator.GetCurrentAnimatorStateInfo(0);
         }
     }
 }

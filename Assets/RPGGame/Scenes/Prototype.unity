@@ -481,9 +481,11 @@ GameObject:
   - component: {fileID: 1480286324}
   - component: {fileID: 1480286326}
   - component: {fileID: 1480286327}
+  - component: {fileID: 1480286328}
   - component: {fileID: 1480286330}
   - component: {fileID: 1480286329}
-  - component: {fileID: 1480286328}
+  - component: {fileID: 1480286331}
+  - component: {fileID: 1480286332}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -552,7 +554,7 @@ CharacterController:
   m_Radius: 0.2
   m_SlopeLimit: 45
   m_StepOffset: 0.3
-  m_SkinWidth: 0.08
+  m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.85, z: 0}
 --- !u!114 &1480286328
@@ -562,40 +564,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1480286323}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75870a77f2abb044f9987306fc6b8eb4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationSpeed: 540
---- !u!114 &1480286329
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1480286323}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1839f38da641454db39d2058039d4f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1480286330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1480286323}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd03642a9748ac447b4fe3e7589b3bd9, type: 3}
+  m_Script: {fileID: 11500000, guid: 14106dc3d36237e449e08980a26e27d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   state: -1
   states:
+  - {fileID: 1480286330}
   - {fileID: 1480286329}
-  - {fileID: 1480286328}
+  - {fileID: 1480286331}
+  - {fileID: 1480286332}
   OnStateChanged:
     m_PersistentCalls:
       m_Calls:
@@ -611,6 +590,83 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1480286329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480286323}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 233d539d008ee4e409e4406742eb5cb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 540
+--- !u!114 &1480286330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480286323}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5baff3d8989aa548b62d1cfddad9677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1480286331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480286323}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c67753f0ea81d04586c65853bec5f8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpPower: 8
+  verticalSpeed: 0
+  gravityInJump: 10
+  moveSpeed: 3
+  OnJumpEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1925446036}
+        m_TargetAssemblyTypeName: RPGGame.PlayerAnimationController, Assembly-CSharp
+        m_MethodName: OnLanding
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1480286332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480286323}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4da184484888d74f9c3e0c04d664dc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnAttackBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAttackCheckEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAttackEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1925446034
 GameObject:
   m_ObjectHideFlags: 0
