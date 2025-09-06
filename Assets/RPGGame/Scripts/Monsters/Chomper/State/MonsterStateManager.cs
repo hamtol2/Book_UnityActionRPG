@@ -15,6 +15,7 @@ namespace RPGGame
             Patrol,
             Chase,
             Attack,
+            Dead,
             Length
         }
 
@@ -36,12 +37,18 @@ namespace RPGGame
         // 몬스터의 레벨
         [SerializeField] private int level = 1;
 
+        // PlayerStateManager 참조 변수. 플레이어의 스테이트를 확인하는 데 사용
+        private PlayerStateManager targetPlayerStateManager;
+
         // 몬스터의 레벨 데이터
         public MonsterData.LevelData CurrentLevelData { get; private set; }
 
         // 플레이어 트랜스폼 컴포넌트 참조 변수
         // 플레이어가 시야에 들어왔는지 확인할 때 주로 사용
         public Transform PlayerTransform { get; private set; }
+
+        // 플레이어가 죽었는지를 알려주는 프로퍼티
+        public bool IsPlayerDead { get { return targetPlayerStateManager.IsPlayerDead; } }
 
         // 초기화
         private void Awake()
@@ -86,6 +93,31 @@ namespace RPGGame
             if (PlayerTransform == null)
             {
                 PlayerTransform = GameObject.FindGameObjectWithTag("Player").transform.root;
+
+                // PlayerStateManager 참조 변수 설정
+                targetPlayerStateManager = PlayerTransform.GetComponent<PlayerStateManager>();
+            }
+
+            // HPController에 필요한 값 전달 및 이벤트 등록 처리
+            HPController hpController = GetComponentInChildren<HPController>();
+            if (hpController != null)
+            {
+                // 최대 체력 값 설정
+                hpController.SetMaxHP(CurrentLevelData.maxHP);
+
+                // 방어력 설정
+                hpController.SetDefense(CurrentLevelData.defense);
+
+                // 몬스터가 죽을 때 발행되는 이벤트에 함수 등록
+                hpController.SubscribeOnDead(OnMonsterDead);
+            }
+
+            // MonsterAttackController 컴포넌트를 검색한 후, 공격력 설정
+            MonsterAttackController attackController = GetComponentInChildren<MonsterAttackController>();
+            if (attackController != null)
+            {
+                // 현재 레벨 데이터의 공격력 설정
+                attackController.SetAttack(CurrentLevelData.attack);
             }
         }
 
@@ -97,6 +129,13 @@ namespace RPGGame
 
         private void Update()
         {
+            // 현재 스테이트가 죽음(Dead)이라면 함수 종료
+            // 플레이어가 죽음 스테이트일 때도 정찰을 하지 않도록 함수 종료
+            if (state == State.Dead || IsPlayerDead)
+            {
+                return;
+            }
+
             // 현재 스테이트가 Idle/Patrol이면, 플레이어가 시야에 들어왔는지 확인(정찰)
             if (state == State.Idle || state == State.Patrol)
             {
@@ -125,7 +164,8 @@ namespace RPGGame
         public void SetState(State newState)
         {
             // 전환하려는 새로운 스테이트가 현재 스테이트와 같으면 함수 종료
-            if (state == newState)
+            // 현재 스테이트가 죽음일 때도 함수 종료
+            if (state == newState || state == State.Dead)
             {
                 return;
             }
@@ -161,6 +201,16 @@ namespace RPGGame
 
             // 레벨 데이터 업데이트
             CurrentLevelData = data.levels[level - 1];
+        }
+
+        // 몬스터가 죽을 때 실행되는 함수
+        public void OnMonsterDead()
+        {
+            // 테스트
+            //Util.LogRed("몬스터 죽음.");
+
+            // 죽음 스테이트로 전환
+            SetState(State.Dead);
         }
     }
 }

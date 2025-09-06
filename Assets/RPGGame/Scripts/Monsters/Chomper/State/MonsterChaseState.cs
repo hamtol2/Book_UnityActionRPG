@@ -9,6 +9,14 @@ namespace RPGGame
         {
             base.Update();
 
+            // 추격하다가 플레이어가 죽었으면 추격 중지
+            if (manager.IsPlayerDead)
+            {
+                // 대기 스테이트로 전환
+                manager.SetState(MonsterStateManager.State.Idle);
+                return;
+            }
+
             // 공격이 가능한 거리에 접근했으면 공격 스테이트로 전환
             if (Vector3.Distance(refTransform.position, manager.PlayerTransform.position) <= data.attackRange)
             {

@@ -37,5 +37,12 @@ namespace RPGGame
             // 함수의 인자로 전달된 열거형 값을 정수로 변환한 후, int 파라미터인 State에 설정
             refAnimator.SetInteger("State", (int)state);
         }
+
+        // 몬스터가 대미지를 입었을 때 실행되는 함수
+        public void OnDamaged()
+        {
+            // Hit 파라미터 설정
+            refAnimator.SetTrigger("Hit");
+        }
     }
 }

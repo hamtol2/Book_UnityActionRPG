@@ -16,6 +16,14 @@ namespace RPGGame
         {
             base.Update();
 
+            // 공격하다가 플레이어가 죽었으면 공격 중지
+            if (manager.IsPlayerDead)
+            {
+                // 대기 스테이트로 전환
+                manager.SetState(MonsterStateManager.State.Idle);
+                return;
+            }
+
             // 회전 처리
             // 플레이어로 향하는 방향 벡터 구하기
             Vector3 direction = manager.PlayerTransform.position - refTransform.position;

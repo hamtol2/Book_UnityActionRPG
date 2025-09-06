@@ -17,6 +17,7 @@ namespace RPGGame
             Move,
             Jump,
             Attack,
+            Dead,
             Length
         }
 
@@ -46,6 +47,9 @@ namespace RPGGame
         // 캐릭터가 지면에 있는지 확인하기 위해 캐릭터 컨트롤러를 사용
         private CharacterController characterController;
 
+        // 플레이어의 레벨
+        private int level = 1;
+
         // 플레이어가 지면에 있는지 확인하는 변수
         public bool IsGrounded { get; private set; }
 
@@ -58,12 +62,21 @@ namespace RPGGame
         // 다음에 이어질 공격 콤보 값을 보여주는 공개 프로퍼티
         public AttackCombo NextAttackCombo { get; private set; } = AttackCombo.None;
 
+        // 플레이어의 레벨 데이터
+        public PlayerData.LevelData CurrentLevelData { get; private set; }
+
+        // 플레이어가 죽었는지를 알려주는 공개 프로퍼티
+        public bool IsPlayerDead { get { return state == State.Dead; } }
+
         private void Awake()
         {
             // 플레이어 데이터 로드.
             // Resources 폴더에 있는 애셋은 Resourcess.Load를 통해서 동적으로 로드가 가능.
             //data = Resources.Load("Data/Player Data") as PlayerData;
             data = DataManager.Instance.playerData;
+
+            // 플레이어의 현재 레벨 데이터 설정
+            CurrentLevelData = data.levels[level - 1];
 
             // 캐릭터 컨트롤러 설정
             if (characterController == null)
@@ -95,10 +108,20 @@ namespace RPGGame
             {
                 // 스테이트에 데이터 전달 (의존성 주입).
                 // data 변수의 경우는 동적으로 검색해서 설정하기 때문에 null 체크를 해주는 것이 좋음.
-                if (data != null)
-                {
+                if (data != null){
                     states[ix].SetData(data);
                 }
+            }
+
+            // HPController 검색 후 이벤트 등록 및 체력 전달
+            HPController hpController = GetComponentInChildren<HPController>();
+            if (hpController != null)
+            {
+                // 플레이어가 죽을 때 발생하는 이벤트에 함수 등록
+                hpController.SubscribeOnDead(OnPlayerDead);
+
+                // 최대 체력 설정
+                hpController.SetMaxHP(CurrentLevelData.maxHP);
             }
         }
 
@@ -110,6 +133,12 @@ namespace RPGGame
 
         private void Update()
         {
+            // 죽음 스테이트일 때는 아무런 동작을 하지 않도록 함수 종료
+            if (IsPlayerDead)
+            {
+                return;
+            }
+
             // 점프 스테이트일 때는 입력을 고려하지 않도록 함수 종료
             if (state == State.Jump)
             {
@@ -199,7 +228,8 @@ namespace RPGGame
         public void SetState(State newState)
         {
             // 플레이어의 현재 스테이트와 변경하려는 스테이트가 같다면, 변경할 필요가 없으므로 함수 종료
-            if (state == newState)
+            // 플레이어가 죽음 스테이트일 때도 스테이트가 바뀌지 않도록 함수 종료
+            if (state == newState || IsPlayerDead)
             {
                 return;
             }
@@ -238,6 +268,14 @@ namespace RPGGame
 
             // 공격 스테이트가 종료되면, 다음 콤보를 나타내는 변수 값을 초깃값으로 설정
             animationController.SetAttackComboState((int)NextAttackCombo);
+        }
+
+        // 플레이어가 죽을 때 실행되는 함수
+        public void OnPlayerDead()
+        {
+            // 테스트
+            //Util.LogRed("플레이어 죽음");
+            SetState(State.Dead);
         }
     }
 }

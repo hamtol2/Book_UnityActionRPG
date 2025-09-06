@@ -37,6 +37,49 @@ namespace RPGGame
             }
         }
 
+        private void FixedUpdate()
+        {
+            // 공격 판정을 하지 않을 때는 충돌 확인을 진행하지 않고 종료
+            if (!isInAttack)
+            {
+                return;
+            }
+
+            // 공격 판정을 진행하는 중이라면, 물리 엔진의 기능을 통해 충돌 확인
+            // Physics.OverlapCapsule 함수를 사용해 임시로 캡슐 모양의 충돌체 형태로 충돌 확인
+            Collider[] colliders = Physics.OverlapCapsule(attackPoints[0].position, attackPoints[1].position, radius, attackTargetLayer);
+
+            // 무기와 충돌한 다른 물체가 없으면 함수 종료
+            if (colliders.Length == 0)
+            {
+                return;
+            }
+
+            // 무기와 충돌한 다른 충돌체에 대미지 전달 시도
+            foreach (Collider collider in colliders)
+            {
+                // 무기와 부딪힌 충돌체에서 대미지 전달을 위해 Damageable 컴포넌트를 검색한 후 대미지 전달
+                // 테스트를 위해 임시로 로그 출력
+                //Util.LogRed("무기와 충돌함");
+                Damageable damageable = collider.GetComponent<Damageable>();
+                if (damageable != null)
+                {
+                    // Damageable 대미지(attackAmount) 전달
+                    damageable.ReceiveDamage(attackAmount);
+                }
+
+                // Hit 파티클 재생
+                if (hitParticle != null)
+                {
+                    // 파티클의 위치를 충돌한 컴포넌트의 위치로 설정
+                    hitParticle.transform.position = collider.transform.position;
+
+                    // 옮긴 위치에서 파티클 재생
+                    hitParticle.Play();
+                }
+            }
+        }
+
         protected override void OnCollect(Collider other)
         {
             //base.OnCollect(other);
