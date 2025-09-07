@@ -84,6 +84,15 @@ namespace RPGGame
         {
             //base.OnCollect(other);
 
+            // 현재 무기를 획득하는 퀘스트를 진행 중인지 확인
+            // 퀘스트 진행 중이 아닐 때는 무기 획득 처리를 하지 않고 종료
+            if (QuestManager.Instance.CurrentQuest.type != QuestData.Type.CollectWeapon)
+            {
+                // 무기 습득 퀘스트를 진행해야 습득이 가능하다는 내용을 다이얼로그에 표시
+                Dialogue.ShowDialogueTextTemporarily("무기를 찾아라 퀘스트를 진행하세요.\n담당 NPC와 대화를 하면 퀘스트를 진행할 수 있습니다.");
+                return;
+            }
+
             // 이 아이템을 수집하지 않았고, 부딪힌 충돌체의 태그가 Player라면 무기 수집 처리
             if (!HasCollected && other.CompareTag("Player"))
             {

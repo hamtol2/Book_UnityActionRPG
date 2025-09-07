@@ -10,12 +10,36 @@ namespace RPGGame
         // 회전 속력 (단위: 도/초).
         //[SerializeField] private float rotationSpeed = 540f;
 
+        // 카메라 트랜스폼 참조 변수
+        private Transform cameraTransform;
+
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+
+            // 카메라 트랜스폼 참조 변수 설정
+            if (cameraTransform == null)
+            {
+                cameraTransform = Camera.main.transform;
+            }
+        }
+
         protected override void Update()
         {
             base.Update();
 
             // 입력 받은 방향 값을 사용해 이동할 방향 벡터 만들기
-            Vector3 direction = new Vector3(InputManager.Movement.x, 0f, InputManager.Movement.y);
+            //Vector3 direction = new Vector3(InputManager.Movement.x, 0f, InputManager.Movement.y);
+            // 카메라의 앞방향 계산. 카메라의 앞방향은 아래나 위를 향할 수 있으므로 y 성분을 0으로 조정
+            Vector3 cameraForward = cameraTransform.forward;
+            cameraForward.y = 0f;
+
+            // 방향 벡터의 길이를 1로 설정하기 위해 정규화 처리
+            cameraForward.Normalize();
+
+            // 이때 카메라가 바라보는 방향을 고려해 계산
+            Vector3 direction = InputManager.Movement.x * cameraTransform.right + InputManager.Movement.y * cameraForward;
+            direction.y = 0f;
 
             // 대각선 이동 방향의 경우에는 상하/좌우 이동 방향보다 방향 벡터의 크기 값이 더 크기 때문에, 
             // 이를 정규화해서 모든 방향에서의 벡터 크기 값이 같도록 처리

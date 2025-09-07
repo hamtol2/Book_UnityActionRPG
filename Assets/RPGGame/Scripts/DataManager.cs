@@ -17,6 +17,12 @@ namespace RPGGame
         // 몬스터 데이터 Scriptable Object
         public MonsterData monsterData { get; private set; }
 
+        // 퀘스트 데이터 Scriptable Object
+        public QuestData questData { get; private set; }
+
+        // NPC 데이터 Scriptable Object
+        public NPCData npcData { get; private set; }
+
         private void Awake()
         {
             // 싱글턴 인스턴스가 null이면, 인스턴스 설정 및 초기화
@@ -60,6 +66,32 @@ namespace RPGGame
                 if (monsterData.levels.Count == 0)
                 {
                     Debug.LogError("몬스터의 레벨 데이터가 초기화되지 않았습니다.");
+                }
+            }
+
+            // 퀘스트 데이터 초기화
+            if (questData == null)
+            {
+                // Resources.Load 함수를 사용해 퀘스트 데이터 로드
+                questData = Resources.Load<QuestData>("Data/Quest Data");
+
+                // 로드한 데이터를 확인 후 초기화되지 않았다면 오류 출력
+                if (questData.quests.Count == 0)
+                {
+                    Debug.LogError("퀘스트 데이터가 초기화되지 않았습니다.");
+                }
+            }
+            
+            // NPC 데이터 초기화
+            if (npcData == null)
+            {
+                // NPC 데이터 파일 검색 후 설정
+                npcData = Resources.Load<NPCData>("Data/NPC Data");
+
+                // 데이터 초기화가 안 된 경우에는 오류 출력
+                if (npcData.attributes.Count == 0)
+                {
+                    Debug.LogError("NPC 데이터가 초기화되지 않았습니다.");
                 }
             }
         }

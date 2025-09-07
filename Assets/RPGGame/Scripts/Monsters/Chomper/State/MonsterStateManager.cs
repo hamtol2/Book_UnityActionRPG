@@ -50,6 +50,9 @@ namespace RPGGame
         // 플레이어가 죽었는지를 알려주는 프로퍼티
         public bool IsPlayerDead { get { return targetPlayerStateManager.IsPlayerDead; } }
 
+        // 몬스터 웨이브 시 몬스터 시야 밖에서도 플레이어를 쫓아가도록 설정하는 변수
+        public bool IsForcedToChase { get; private set; }
+
         // 초기화
         private void Awake()
         {
@@ -149,7 +152,7 @@ namespace RPGGame
             }
 
             // 현재 스테이트가 Chase/Attack 스테이트라면, 플레이어가 시야에서 벗어났는지 확인
-            if (state == State.Chase || state == State.Attack)
+            if (state == State.Chase && !IsForcedToChase)
             {
                 // 시야에서 벗어났는지 확인하고, 벗어났으면 Idle 스테이트로 전환
                 if (!Util.IsInSight(refTransform, PlayerTransform, data.sightAngle, data.sightRange))
@@ -211,6 +214,24 @@ namespace RPGGame
 
             // 죽음 스테이트로 전환
             SetState(State.Dead);
+        }
+
+        // 몬스터 웨이브 시 플레이어를 쫓아가도록 설정하는 함수
+        public void SetForceToChase()
+        {
+            // 강제로 따라가도록 하는 옵션 설정
+            IsForcedToChase = true;
+
+            // 퀘스트 아이템의 타입을 웨이브로 변경
+            // 퀘스트 아이템의 타입을 웨이브로 변경
+            QuestItem questItem = GetComponentInChildren<QuestItem>();
+            if (questItem != null)
+            {
+                questItem.SetType(QuestData.Type.Wave);
+            }
+
+            // 쫓아가기 스테이트로 전환
+            SetState(State.Chase);
         }
     }
 }

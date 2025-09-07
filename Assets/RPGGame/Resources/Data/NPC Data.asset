@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49f5021859e3b254aaf0344f9c7bc2f9, type: 3}
+  m_Name: NPC Data
+  m_EditorClassIdentifier: 
+  attributes:
+  - id: 1
+    name: "\uB300\uB2C8\uC5BC"
+    interactionSight: 2
+  - id: 2
+    name: "\uC874"
+    interactionSight: 2
+  - id: 3
+    name: "\uB85C\uB2C8"
+    interactionSight: 2
+  - id: 4
+    name: "\uD0B4"
+    interactionSight: 2

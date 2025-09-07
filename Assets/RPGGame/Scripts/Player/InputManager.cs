@@ -22,6 +22,9 @@ namespace RPGGame
         // 공격 입력을 저장하는 변수(눌리면 True, 안 눌리면 False)
         public static bool IsAttack { get; private set; } = false;
 
+        // 마우스 상하좌우 드래그 입력을 저장하는 변수
+        public static Vector2 MouseMove { get; private set; } = Vector2.zero;
+
         // 이동 관련 입력 액션
         private InputAction moveAction;
         
@@ -30,6 +33,9 @@ namespace RPGGame
 
         // 공격 입력 액션
         private InputAction attackAction;
+
+        // 카메라 회전 관련 입력 액션
+        private InputAction cameraRotationAction;
 
         private void Awake()
         {
@@ -50,6 +56,12 @@ namespace RPGGame
             {
                 attackAction = InputSystem.actions.FindAction("Attack");
             }
+
+            // 카메라 회전 입력 액션 설정
+            if (cameraRotationAction == null)
+            {
+                cameraRotationAction = InputSystem.actions.FindAction("Look");
+            }
         }
 
         private void Update()
@@ -69,6 +81,9 @@ namespace RPGGame
                 // 공격 입력 값을 읽는다.
                 IsAttack = attackAction.WasPressedThisFrame();
             }
+
+            // 카메라 회전 값을 읽는다. 
+            MouseMove = cameraRotationAction.ReadValue<Vector2>();
         }
     }
 }
