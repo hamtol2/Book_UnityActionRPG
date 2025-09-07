@@ -27,7 +27,8 @@ namespace RPGGame
                         // 다음 퀘스트로 업데이트
                         questManager.MoveToNextQuest();
 
-                        // 퀘스트 내용을 다이얼로그에 표시 Dialogue.ShowDialogueText(questManager.CurrentQuest.questBeginText);
+                        // 퀘스트 내용을 다이얼로그에 표시
+                        Dialogue.ShowDialogueText(questManager.CurrentQuest.questBeginText);
 
                         // 퀘스트 상태를 진행으로 변경
                         questManager.SetState(QuestManager.QuestState.Processing);
