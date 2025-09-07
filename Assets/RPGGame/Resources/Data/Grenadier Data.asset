@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7281373c1cf60f4480a5b8ac701806d, type: 3}
+  m_Name: Grenadier Data
+  m_EditorClassIdentifier: 
+  levels:
+  - level: 1
+    maxHP: 200
+    attack: 35
+    rangeAttack: 25
+    defense: 10
+    gainExp: 15
+  - level: 2
+    maxHP: 250
+    attack: 45
+    rangeAttack: 35
+    defense: 12
+    gainExp: 20
+  - level: 3
+    maxHP: 300
+    attack: 60
+    rangeAttack: 50
+    defense: 15
+    gainExp: 25
+  - level: 4
+    maxHP: 350
+    attack: 70
+    rangeAttack: 60
+    defense: 17
+    gainExp: 30
+  - level: 5
+    maxHP: 400
+    attack: 75
+    rangeAttack: 65
+    defense: 20
+    gainExp: 35
+  - level: 6
+    maxHP: 450
+    attack: 80
+    rangeAttack: 70
+    defense: 22
+    gainExp: 40
+  - level: 7
+    maxHP: 500
+    attack: 90
+    rangeAttack: 80
+    defense: 25
+    gainExp: 45
+  - level: 8
+    maxHP: 550
+    attack: 95
+    rangeAttack: 85
+    defense: 27
+    gainExp: 50
+  - level: 9
+    maxHP: 600
+    attack: 100
+    rangeAttack: 90
+    defense: 30
+    gainExp: 55
+  - level: 10
+    maxHP: 650
+    attack: 110
+    rangeAttack: 100
+    defense: 32
+    gainExp: 60
+  patrolWaitTime: 3
+  patrolRotateSpeed: 360
+  sightAngle: 60
+  sightRange: 10
+  chaseRotateSpeed: 540
+  attackRange: 2
+  rangeAttackRange: 6

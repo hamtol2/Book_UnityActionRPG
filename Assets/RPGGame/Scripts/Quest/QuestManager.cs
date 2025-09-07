@@ -240,7 +240,11 @@ namespace RPGGame
             }
 
             // 이번에 진행할 퀘스트가 보스 몬스터를 제거하는 퀘스트라면, 보스 몬스터 생성
-
+            else if (CurrentQuest.type == QuestData.Type.Kill && CurrentQuest.targetType == QuestData.TargetType.Grenadier)
+            {
+                // 보스 몬스터 등장.
+                MonsterSpawner.SpawnGrenadier();
+            }
         }
 
         // 퀘스트 시작 이벤트에 등록하는 함수

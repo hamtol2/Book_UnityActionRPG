@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -35,6 +36,12 @@ namespace RPGGame
 
         // NPCData 애셋의 저장 경로
         private static readonly string npcDataSOFilePath = "Assets/RPGGame/Resources/Data/NPC Data.asset";
+
+        // GrenadierLevelData.csv 데이터 파일 경로
+        private static readonly string grenadierLevelDataFilePath = "Assets/RPGGame/Data/Editor/GrenadierLevelData.csv";
+
+        // GrenadierData 애셋의 저장 경로
+        private static readonly string grenadierDataSOFilePath = "Assets/RPGGame/Resources/Data/Grenadier Data.asset";
 
         // 데이터 애셋을 저장할 폴더가 있는지 확인하고, 없으면 생성하는 함수.
         private static void CheckAndCreateDataFolder()
@@ -236,6 +243,52 @@ namespace RPGGame
 
             // 애셋이 변경됐다고 표시
             EditorUtility.SetDirty(npcDataSO);
+
+            // 애셋 저장
+            AssetDatabase.SaveAssets();
+        }
+
+        // 유니티 에디터 상단에 메뉴를 생성해주는 구문
+        [MenuItem("RPGGame/Create Grenadier Monster Data")]
+        static void CreateGrenadierMonsterlData()
+        {
+            // 먼저 GrenadierData Scriptable Object 파일이 있는지 검색
+            MonsterData grenadierDataSO = AssetDatabase.LoadAssetAtPath(grenadierDataSOFilePath, typeof(MonsterData)) as MonsterData;
+
+            // GrenadierData 파일이 없으면, 지정한 경로에 애셋 새로 생성
+            if (grenadierDataSO == null)
+            {
+                grenadierDataSO = ScriptableObject.CreateInstance<MonsterData>();
+                AssetDatabase.CreateAsset(grenadierDataSO, grenadierDataSOFilePath);
+            }
+
+            // CSV 파일을 줄별로 읽어서 문자열 배열에 저장
+            List<string> lines = File.ReadLines(grenadierLevelDataFilePath).ToList();
+
+            // 레벨 데이터 초기화
+            grenadierDataSO.levels = new List<MonsterData.LevelData>();
+
+            // CSV 파일의 첫 번째 줄은 필요하지 않기 때문에 무시하고 두 번째 줄부터 처리
+            for (int ix = 1; ix < lines.Count; ++ix)
+            {
+                // CSV는 콤마(,)로 데이터를 구분하므로 문자열을 콤마를 기준으로 분리해 저장
+                string[] data = lines[ix].Split(',', System.StringSplitOptions.RemoveEmptyEntries);
+
+                // 레벨 데이터 생성.
+                MonsterData.LevelData levelData = new MonsterData.LevelData();
+                levelData.level = int.Parse(data[0]);           // 첫 번째 데이터는 레벨
+                levelData.maxHP = float.Parse(data[1]);         // 두 번째 데이터는 최대 체력
+                levelData.attack = float.Parse(data[2]);        // 세 번째 데이터는 근접 공격력
+                levelData.rangeAttack = float.Parse(data[3]);   // 네 번째 데이터는 광역 공격력
+                levelData.defense = float.Parse(data[4]);       // 다섯 번째 데이터는 방어력
+                levelData.gainExp = float.Parse(data[5]);       // 여섯 번째 데이터는 획득 경험치
+
+                // 생성한 데이터를 GrenadierData Scriptable Object에 추가
+                grenadierDataSO.levels.Add(levelData);
+            }
+
+            // 애셋이 변경됐다고 표시
+            EditorUtility.SetDirty(grenadierDataSO);
 
             // 애셋 저장
             AssetDatabase.SaveAssets();

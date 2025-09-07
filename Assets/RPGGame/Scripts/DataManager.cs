@@ -23,6 +23,9 @@ namespace RPGGame
         // NPC 데이터 Scriptable Object
         public NPCData npcData { get; private set; }
 
+        // 보스 몬스터 데이터 Scriptable Object
+        public MonsterData grenadierData { get; private set; }
+
         private void Awake()
         {
             // 싱글턴 인스턴스가 null이면, 인스턴스 설정 및 초기화
@@ -92,6 +95,16 @@ namespace RPGGame
                 if (npcData.attributes.Count == 0)
                 {
                     Debug.LogError("NPC 데이터가 초기화되지 않았습니다.");
+                }
+            }
+
+            // 보스 몬스터 데이터 초기화
+            if (grenadierData == null)
+            {
+                grenadierData = Resources.Load<MonsterData>("Data/Grenadier Data");
+                if (grenadierData.levels.Count == 0)
+                {
+                    Debug.LogError("보스 몬스터의 레벨 데이터가 초기화되지 않았습니다.");
                 }
             }
         }

@@ -28,6 +28,9 @@ namespace RPGGame
         // 몬스터를 생성할 때 사용할 프리팹
         [SerializeField] private GameObject chomperMonsterPrefab;
 
+        // 보스 몬스터 참조 변수
+        [SerializeField] private GameObject grenadierMonster;
+
         // 몬스터를 생성할 스폰 위치 배열
         [SerializeField] private Transform[] spawnPositions;
 
@@ -181,6 +184,13 @@ namespace RPGGame
 
             // 다이얼로그에 메시지 출력
             Dialogue.ShowDialogueTextTemporarily(instance.monsterWaves[instance.currentWaveID].spawnMessage);
+        }
+
+        // 보스 몬스터를 생성할 때 사용하는 함수
+        public static void SpawnGrenadier()
+        {
+            // 보스 몬스터 게임 오브젝트 활성화
+            instance.grenadierMonster.SetActive(true);
         }
     }
 }
