@@ -63,7 +63,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5780558112131810990
 Transform:
   m_ObjectHideFlags: 0
@@ -544,7 +544,7 @@ MonoBehaviour:
   patrolDestination: {x: 0, y: 0, z: 0}
   validPartolTime: 3
   pointer: {fileID: 5780558112131810990}
-  test: 1
+  test: 0
 --- !u!114 &8372281270283080973
 MonoBehaviour:
   m_ObjectHideFlags: 0

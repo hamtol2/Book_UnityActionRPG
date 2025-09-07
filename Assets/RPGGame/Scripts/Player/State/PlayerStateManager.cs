@@ -68,6 +68,9 @@ namespace RPGGame
         // 플레이어가 죽었는지를 알려주는 공개 프로퍼티
         public bool IsPlayerDead { get { return state == State.Dead; } }
 
+        // 플레이어의 현재 스테이트를 반환하는 공개 프로퍼티
+        public State CurrentState { get { return state; } }
+
         private void Awake()
         {
             // 플레이어 데이터 로드.
@@ -128,13 +131,13 @@ namespace RPGGame
         private void OnEnable()
         {
             // 게임이 시작되면 대기(Idle) 스테이트로 전환
-            SetState(State.Idle);
+            //SetState(State.Idle);
         }
 
         private void Update()
         {
             // 죽음 스테이트일 때는 아무런 동작을 하지 않도록 함수 종료
-            if (IsPlayerDead)
+            if (IsPlayerDead || state == State.None)
             {
                 return;
             }

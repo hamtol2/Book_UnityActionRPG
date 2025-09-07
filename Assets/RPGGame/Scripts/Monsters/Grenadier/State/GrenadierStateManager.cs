@@ -155,6 +155,13 @@ namespace RPGGame
         {
             // 대기 스테이트로 시작
             SetState(State.Idle);
+
+            // 배경 음악을 전투 배경 음악으로 변경
+            BackgroundMusicPlayer musicPlayer = FindFirstObjectByType<BackgroundMusicPlayer>();
+            if (musicPlayer != null)
+            {
+                musicPlayer.PlayBattleMusic();
+            }
         }
 
         // 스테이트 변경 함수

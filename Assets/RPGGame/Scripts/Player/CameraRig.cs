@@ -27,6 +27,10 @@ namespace RPGGame
         // 카메라 X축 각도 제한
         [SerializeField] private Vector2 rotationXMinMax = new Vector2(-20f, 25f);
 
+        // 플레이어 스테이트 관리자 참조 변수
+        // 플레이어가 회전 입력을 받을 준비가 됐는지 확인하기 위해 사용
+        [SerializeField] private PlayerStateManager playerStateManager;
+
         // X 회전 값 계산 변수
         private float xRotation = 0f;
 
@@ -52,12 +56,25 @@ namespace RPGGame
             {
                 refCamera = Camera.main;
             }
+
+            // 플레이어 스테이트 관리자 참조 변수 설정
+            if (playerStateManager == null)
+            {
+                playerStateManager = FindFirstObjectByType<PlayerStateManager>();
+            }
         }
 
         // LateUpdate 함수는 Update 함수와 비슷하게 프레임마다 실행
         // 하지만 LateUpdate 함수는 Update가 실행된 이후 시점에 실행
         private void LateUpdate()
         {
+            // 플레이어의 현재 스테이트가 게임 시작 전이거나, 죽음 상태일 때는 카메라 이동 / 회전 중지
+            PlayerStateManager.State currentState = playerStateManager.CurrentState;
+            if (currentState == PlayerStateManager.State.None || currentState == PlayerStateManager.State.Dead)
+            {
+                return;
+            }
+
             // 카메라가 캐릭터를 따라다닐 때 약간의 지연(딜레이) 효과를 적용해 부드럽게 따라가도록 Vector3.Lerp를 활용
             refTransform.position = Vector3.Lerp(refTransform.position, followTarget.position, movementDelay * Time.deltaTime);
 
