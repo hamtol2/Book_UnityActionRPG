@@ -214,6 +214,16 @@ namespace RPGGame
 
             // 죽음 스테이트로 전환
             SetState(State.Dead);
+
+            // 플레이어 경험치 획득
+            PlayerLevelController playerLevelController = FindFirstObjectByType<PlayerLevelController>();
+
+            // 플레이어 레벨 관리자 검색 후 경험치 전달
+            if (playerLevelController != null)
+            {
+                // 몬스터를 처치했을 때 얻는 경험치 양을 전달
+                playerLevelController.GainExp(CurrentLevelData.gainExp);
+            }
         }
 
         // 몬스터 웨이브 시 플레이어를 쫓아가도록 설정하는 함수

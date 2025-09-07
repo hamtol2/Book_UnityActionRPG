@@ -276,6 +276,26 @@ namespace RPGGame
             // 테스트
             //Util.LogRed("플레이어 죽음");
             SetState(State.Dead);
+
+            // 플레이어가 죽었다는 메시지를 다이얼로그로 표시
+            Dialogue.ShowDialogueTextTemporarily("엘렌이 전사했습니다.\n게임을 다시 시작해 마을을 구해주세요!", 5f);
+        }
+
+        // 플레이어가 레벨업이 되었을 때 실행될 함수
+        public void OnPlayerLevelUp(int newLevel)
+        {
+            // 레벨 정보 업데이트
+            level = newLevel;
+
+            // 현재 레벨 데이터 업데이트
+            CurrentLevelData = DataManager.Instance.playerData.levels[level - 1];
+
+            // 체력 채우기
+            HPController hpController = GetComponentInChildren<HPController>();
+            if (hpController != null)
+            {
+                hpController.SetMaxHP(CurrentLevelData.maxHP);
+            }
         }
     }
 }

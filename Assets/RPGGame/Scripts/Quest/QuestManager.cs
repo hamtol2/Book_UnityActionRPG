@@ -169,6 +169,14 @@ namespace RPGGame
                 }
 
                 // 퀘스트 달성으로 획득한 경험치 전달
+                PlayerLevelController playerLevelController = FindFirstObjectByType<PlayerLevelController>();
+
+                // 플레이어 레벨 관리자 검색 후 경험치 전달
+                if (playerLevelController != null)
+                {
+                    // 현재 퀘스트를 완료했을 때 얻는 경험치 양을 전달
+                    playerLevelController.GainExp(CurrentQuest.exp);
+                }
 
                 // 퀘스트 달성 이벤트 발행
                 OnQuestCompleted?.Invoke(currentQuestID);
