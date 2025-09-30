@@ -10,10 +10,10 @@ namespace RPGGame
         [SerializeField] private UnityEvent<float> OnDamageReceived;
 
         // 대미지를 받았을 때 중복으로 대미지를 계속해서 받지 않도록 하는 변수(무적 모드)
-        [SerializeField] private bool isVulnerable = false;
+        [SerializeField] private bool isInvulnerable = false;
 
         // 대미지를 중복으로 입지 않도록 유지하는 시간(단위: 초).
-        [SerializeField] private float vulnerableTime = 0.2f;
+        [SerializeField] private float invulnerableTime = 0.2f;
 
         // 무적 모드의 지속 시간 계산을 위한 변수
         [SerializeField] private float time = 0f;
@@ -24,10 +24,10 @@ namespace RPGGame
         private void Update()
         {
             // 대미지를 입지 않는 무적 모드일 때 무적 모드 해제까지의 시간 계산
-            if (isVulnerable && Time.time > time + vulnerableTime)
+            if (isInvulnerable && Time.time > time + invulnerableTime)
             {
                 // 무적 모드 해제.
-                isVulnerable = false;
+                isInvulnerable = false;
             }
         }
 
@@ -42,13 +42,13 @@ namespace RPGGame
         public void ReceiveDamage(float damageAmount)
         {
             // 무적 상태라면 대미지를 처리하지 않고 함수 종료
-            if (isVulnerable)
+            if (isInvulnerable)
             {
                 return;
             }
 
             // 무적 상태 On
-            isVulnerable = true;
+            isInvulnerable = true;
 
             // 무적 상태 시작 시간 저장
             time = Time.time;
