@@ -25,6 +25,12 @@ namespace RPGGame
         // Animator에 State 값을 int로 변환해 전달
         private void OnStateChanged(NPCStateManager.State state)
         {
+            // Animator 컴포넌트가 없으면 함수 종료
+            if (refAnimator == null)
+            {
+                return;
+            }
+
             refAnimator.SetInteger("State", (int)state);
         }
     }
