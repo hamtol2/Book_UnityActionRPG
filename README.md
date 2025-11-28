@@ -54,5 +54,5 @@ Scriptable Object를 활용해 플레이어, 몬스터, 퀘스트, NPC 데이터
 이 README 및 관련 저장소의 모든 내용은 저작권이 보호됩니다.  
 비상업적 학습, 참고 목적으로는 자유롭게 사용 가능하지만, 무단 복제나 상업적 재배포는 금지됩니다.
 
-본 프로젝트에서는 Unity Asset Store에서 무료로 제공되는 3D Game Kit (Standard Unity Asset Store EULA 적용) 에셋을 사용하였습니다.
+본 프로젝트에서는 Unity Asset Store에서 무료로 제공되는 [**3D Game Kit**](https://assetstore.unity.com/packages/templates/tutorials/unity-learn-3d-game-kit-115747?srsltid=AfmBOopY0bh6Z1Sdh6L1IILPUR0iB2COW67VLXH4LUe71TnWCW3x2RVi) ([**Standard Unity Asset Store EULA 적용**](https://unity.com/kr/legal/as-terms)) 에셋을 사용하였습니다.
 해당 에셋은 Unity 라이선스 하에, 게임 빌드 결과물에 포함하여 사용할 수 있으며, 상업용 또는 비상업용 프로젝트 모두에 사용이 가능합니다.
